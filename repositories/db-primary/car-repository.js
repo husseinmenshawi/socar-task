@@ -38,17 +38,15 @@ module.exports = class DbPrimaryCarRepository extends BaseClass {
     const dbResult = await super.PrimaryDbModels.Cars.findAll(options);
     return super.handleArrayObjectReturn({ dbResult, returnAsJson });
   }
-  async FindCarListingsByParams({ carId, availableDate, returnAsJson = true }) {
+  async FindCarListingsByParams({
+    carId,
+    availableDate,
+    carStatusId,
+    returnAsJson = true,
+  }) {
     const options = {
       where: {
-        [Op.and]: [
-          {
-            carId,
-          },
-          {
-            availableDate: { [Op.in]: availableDate },
-          },
-        ],
+        [Op.and]: [],
       },
       include: [
         {
@@ -59,6 +57,18 @@ module.exports = class DbPrimaryCarRepository extends BaseClass {
         },
       ],
     };
+
+    if (carId) {
+      options.where[Op.and].push({ carId });
+    }
+
+    if (availableDate) {
+      options.where[Op.and].push({ availableDate: { [Op.in]: availableDate } });
+    }
+
+    if (carStatusId) {
+      options.where[Op.and].push({ carStatusId });
+    }
 
     const dbResult = await super.PrimaryDbModels.CarListings.findAll(options);
     return super.handleArrayObjectReturn({ dbResult, returnAsJson });
@@ -135,37 +145,6 @@ module.exports = class DbPrimaryCarRepository extends BaseClass {
         },
       ],
     };
-    const dbResult = await super.PrimaryDbModels.CarListings.findAll(options);
-
-    return super.handleArrayObjectReturn({ dbResult, returnAsJson });
-  }
-
-  async FindCarListingsByCarId({
-    id,
-    isAvailable = true,
-    returnAsJson = true,
-  }) {
-    const options = {
-      where: {
-        [Op.and]: [
-          {
-            carId: id,
-          },
-        ],
-      },
-      include: [
-        {
-          model: super.PrimaryDbModels.Users,
-        },
-        {
-          model: super.PrimaryDbModels.Cars,
-        },
-      ],
-    };
-
-    if (isAvailable) {
-      options.where[Op.and].push({ carStatusId: 1 });
-    }
     const dbResult = await super.PrimaryDbModels.CarListings.findAll(options);
 
     return super.handleArrayObjectReturn({ dbResult, returnAsJson });

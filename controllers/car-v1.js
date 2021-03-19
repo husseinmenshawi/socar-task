@@ -106,15 +106,13 @@ router.get(
 );
 
 router.get(
-  "/:id/listing-availablity",
+  "/listing-availablity",
   middlewares.passport.jwtToken.authenticate("jwt", { session: false }),
   middlewares.jtwTokenValidator.validate,
   async (req, res, next) => {
-    const { id } = req.params;
-
     try {
-      const carListings = await new Services.Car().FindCarListingsByCarId({
-        id,
+      const carListings = await new Services.Car().FindCarListingsByParams({
+        query: req.query,
       });
       res.status(200);
       res.json(carListings);

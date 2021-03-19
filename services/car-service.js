@@ -129,14 +129,18 @@ module.exports = class CarService extends BaseClass {
     );
   }
 
-  async FindCarListingsByCarId({ id }) {
-    if (!super.ValidationUtil.isUUID(id)) {
-      throw super.ErrorUtil.CarIdInvalidError();
+  async FindCarListingsByParams({ query }) {
+    if (!super.ValidationUtil.isFindCarListingObject(query)) {
+      throw super.ErrorUtil.ListingMetadataInvalidError();
     }
-    return await new this.Repositories.Db.Primary.Car().FindCarListingsByCarId({
-      id,
-      isAvailable: true,
-    });
+    const { carId, availableDate, carStatusId } = query;
+    return await new this.Repositories.Db.Primary.Car().FindCarListingsByParams(
+      {
+        carId,
+        availableDate: availableDate ? [availableDate] : undefined,
+        carStatusId,
+      }
+    );
   }
 
   async FindAllCars({ userId }) {

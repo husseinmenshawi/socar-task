@@ -2,7 +2,6 @@
 
 const Yup = require("yup");
 
-
 const isCreateListingObject = (input) => {
   return Yup.object()
     .shape({
@@ -31,6 +30,16 @@ const isCredentialObject = (input) => {
     .shape({
       email: email(),
       password: password(),
+    })
+    .isValidSync(input);
+};
+
+const isFindCarListingObject = (input) => {
+  return Yup.object()
+    .shape({
+      carId: optionalUUID(),
+      availableDate: dateStringFormat(),
+      carStatusId: optionalInteger(),
     })
     .isValidSync(input);
 };
@@ -66,6 +75,18 @@ const requiredString = () => {
   return Yup.string().min(1).required();
 };
 
+const optionalInteger = () => {
+  return Yup.number().notRequired().integer().min(1);
+};
+
+const optionalString = () => {
+  return Yup.string().min(1).notRequired();
+};
+
+const optionalUUID = () => {
+  return Yup.string().notRequired().min(36).max(36).trim().strict();
+};
+
 const email = () => {
   return Yup.string().required().min(1).trim().strict().email();
 };
@@ -85,5 +106,6 @@ module.exports = {
   isInteger,
   isUUID,
   isCreateCarObject,
-  dateStringFormat
+  dateStringFormat,
+  isFindCarListingObject
 };
