@@ -7,6 +7,11 @@ This will serve as the backend API service
 
 Standard, `npm install` and `npm start` will get the party poppin'.
 
+## MSSM Db setup
+
+Create db name with `socar-task-db`
+Create a user with username as `testuser` and password as `123456`
+
 ## System Config
 
 The following is the prepopulated data that will be inserted into your mssql db upon starting the server:
