@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program - DEV - PORT 3000",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/index.js",
+      "env": {
+      }
+    },
+  ]
+}
