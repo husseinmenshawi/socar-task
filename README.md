@@ -2,7 +2,7 @@
 
 This will serve as the backend API service
 
-Postman API docs: https://documenter.getpostman.com/view/6753651/Tz5v2awa#7642a7e6-0413-46af-83c7-93aecb698f43
+Postman API docs: https://documenter.getpostman.com/view/6753651/Tz5v2awa
 
 Public link to API: https://www.getpostman.com/collections/a45fde4914136b22c71b
 
